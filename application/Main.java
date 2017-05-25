@@ -44,10 +44,9 @@ public class Main extends Application {
 			root.add(upperBoundInput, 1, 3);
 			
 			Label resultsLabel = new Label("Results:");
-			TextArea results = new TextArea();
+			Text results = new Text();
 			results.setDisable(true);
-			results.setMaxHeight(100);
-			results.setMaxWidth(300);
+			results.setWrappingWidth(200);
 			root.add(resultsLabel, 1, 5);
 			root.add(results, 1, 6);
 			
@@ -75,9 +74,9 @@ public class Main extends Application {
 	 * 
 	 * @param lowerBound	String		User input to lower bound field
 	 * @param upperBound	String		User input to upper bound field
-	 * @param results		TextArea	Display results/errors
+	 * @param results		Text		Display results/errors
 	 */
-	private void getLargestPalindrome(String lowerBound, String upperBound, TextArea results)
+	private void getLargestPalindrome(String lowerBound, String upperBound, Text results)
 	{
 		
 		boolean validInput = areBoundsValid(lowerBound, upperBound, results);
@@ -105,16 +104,16 @@ public class Main extends Application {
 	 * Determines if lower and upper bounds are positive integers and
 	 * displays error to user if either value is invalid.
 	 * 
-	 * @param lowerBound	String		User input for lower bound
-	 * @param upperBound	String		User input for upper bound
-	 * @param results		TextArea	gui component where results/errors are displayed
-	 * @return				boolean		True if upper and lower bounds are valid, else False
+	 * @param lowerBound	String	User input for lower bound
+	 * @param upperBound	String	User input for upper bound
+	 * @param results		Text	gui component where results/errors are displayed
+	 * @return				boolean	True if upper and lower bounds are valid, else False
 	 */
-	private boolean areBoundsValid(String lowerBound, String upperBound, TextArea results)
+	private boolean areBoundsValid(String lowerBound, String upperBound, Text results)
 	{
 		if (!isNumber(lowerBound) || !isNumber(upperBound))
 		{
-			results.setText("Lower and upper bounds must be positive, whole numbers (Integers).");
+			results.setText("Lower and upper bounds must be positive integer values.");
 			return false;
 		}
 		return true;
@@ -128,7 +127,7 @@ public class Main extends Application {
 	 */
 	private boolean isNumber(String input)
 	{
-		if (input.matches("^[0-9]*"))
+		if (input.matches("^[0-9]*") && !input.matches(""))
 		{
 			return true;
 		}

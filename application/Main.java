@@ -73,20 +73,31 @@ public class Main extends Application {
 	 * Finds the largest palindrome between lower and upper bounds and
 	 * displays result or error message
 	 * 
-	 * @param lowerBound
-	 * @param upperBound
-	 * @param results
+	 * @param lowerBound	String		User input to lower bound field
+	 * @param upperBound	String		User input to upper bound field
+	 * @param results		TextArea	Display results/errors
 	 */
 	private void getLargestPalindrome(String lowerBound, String upperBound, TextArea results)
 	{
 		
-		boolean validInput = areBoundsValidValues(lowerBound, upperBound, results);
+		boolean validInput = areBoundsValid(lowerBound, upperBound, results);
 		
 		if (validInput)
 		{
-			//Search for largest palindrome
+			int lowerValue = Integer.parseInt(lowerBound);
+			int upperValue = Integer.parseInt(upperBound);
+			FindLargestPalindrome find = new FindLargestPalindrome(lowerValue, upperValue);
+			int value = find.returnLargestPalindrome();
+			String message = "";
 			
-			
+			if (value == -1)
+			{
+				message = "No palindromic number found between " + lowerBound + " and " + upperBound;
+			}else{
+				message = "Largest palindromic number found is: " + value;
+			}
+				
+			results.setText(message);
 		}
 	}
 	
@@ -99,7 +110,7 @@ public class Main extends Application {
 	 * @param results		TextArea	gui component where results/errors are displayed
 	 * @return				boolean		True if upper and lower bounds are valid, else False
 	 */
-	private boolean areBoundsValidValues(String lowerBound, String upperBound, TextArea results)
+	private boolean areBoundsValid(String lowerBound, String upperBound, TextArea results)
 	{
 		if (!isNumber(lowerBound) || !isNumber(upperBound))
 		{

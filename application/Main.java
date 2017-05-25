@@ -47,6 +47,7 @@ public class Main extends Application {
 			
 			Label resultsLabel = new Label("Results:");
 			TextArea results = new TextArea();
+			results.setDisable(true);
 			results.setMaxHeight(100);
 			results.setMaxWidth(300);
 			root.add(resultsLabel, 1, 5);

@@ -1,5 +1,7 @@
 package application;
 	
+import java.math.BigInteger;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,7 +30,7 @@ public class Main extends Application {
 			root.setVgap(10);
 			root.setPadding(new Insets(10, 10, 10, 10));
 			
-			String directionsString = "Please select whole number lower and upper bounds in the labeled spaces below. Press 'Calculate' to search the number range for the largest palindrome.";
+			String directionsString = "Please select positive, integer lower and upper bounds in the labeled spaces below. Press 'Calculate' to search the number range for the largest palindrome.";
 		    Text directions = new Text(directionsString);
 		    directions.setWrappingWidth(300);
 		    root.add(directions, 1,1);
@@ -43,17 +45,21 @@ public class Main extends Application {
 			root.add(lowerBoundInput, 1, 2);
 			root.add(upperBoundInput, 1, 3);
 			
+			Text errors = new Text();
+			errors.setWrappingWidth(250);
+			root.add(errors, 1, 5);
+			
 			Label resultsLabel = new Label("Results:");
 			Text results = new Text();
 			results.setDisable(true);
-			results.setWrappingWidth(200);
-			root.add(resultsLabel, 1, 5);
-			root.add(results, 1, 6);
+			results.setWrappingWidth(250);
+			root.add(resultsLabel, 1, 6);
+			root.add(results, 1, 7);
 			
 			Button calculateButton = new Button("Calculate");
 			calculateButton.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override public void handle(ActionEvent e) {
-			    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(), results);
+			    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(),errors, results);
 			    }
 			});
 			root.add(calculateButton, 1, 4);
@@ -74,18 +80,20 @@ public class Main extends Application {
 	 * 
 	 * @param lowerBound	String		User input to lower bound field
 	 * @param upperBound	String		User input to upper bound field
-	 * @param results		Text		Display results/errors
+	 * @param errors		Text		Display errors
+	 * @param results		Text		Display results
 	 */
-	private void getLargestPalindrome(String lowerBound, String upperBound, Text results)
+	private void getLargestPalindrome(String lowerBound, String upperBound,Text errors, Text results)
 	{
 		
-		boolean validInput = areBoundsValid(lowerBound, upperBound, results);
+		boolean validInput = areBoundsValid(lowerBound, upperBound, errors);
 		
 		if (validInput)
 		{
 			int lowerValue = Integer.parseInt(lowerBound);
 			int upperValue = Integer.parseInt(upperBound);
 			FindLargestPalindrome find = new FindLargestPalindrome(lowerValue, upperValue);
+			results.setText("Searching...");
 			int value = find.returnLargestPalindrome();
 			String message = "";
 			
@@ -106,16 +114,29 @@ public class Main extends Application {
 	 * 
 	 * @param lowerBound	String	User input for lower bound
 	 * @param upperBound	String	User input for upper bound
-	 * @param results		Text	gui component where results/errors are displayed
+	 * @param errors		Text	gui component where errors are displayed
 	 * @return				boolean	True if upper and lower bounds are valid, else False
 	 */
-	private boolean areBoundsValid(String lowerBound, String upperBound, Text results)
+	private boolean areBoundsValid(String lowerBound, String upperBound, Text errors)
 	{
+		
 		if (!isNumber(lowerBound) || !isNumber(upperBound))
 		{
-			results.setText("Lower and upper bounds must be positive integer values.");
+			errors.setText("Lower and upper bounds must be positive integer values.");
 			return false;
 		}
+		
+		BigInteger lowerBigInt = new BigInteger(lowerBound);
+		BigInteger upperBigInt = new BigInteger(upperBound);
+		String maxInteger = Integer.toString(Integer.MAX_VALUE);
+		BigInteger maxIntValue = new BigInteger(maxInteger);
+		
+		if (lowerBigInt.compareTo(maxIntValue) >= 1 || upperBigInt.compareTo(maxIntValue) >= 1)
+		{
+			errors.setText("Values must be in the positive, integer range [0 - 2147483647]");
+			return false;
+		}
+		
 		return true;
 	}
 	

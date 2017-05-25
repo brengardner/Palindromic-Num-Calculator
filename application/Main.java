@@ -1,6 +1,8 @@
 package application;
 	
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -41,10 +43,6 @@ public class Main extends Application {
 			root.add(lowerBoundInput, 1, 2);
 			root.add(upperBoundInput, 1, 3);
 			
-			Button calculateButton = new Button("Calculate");
-			//Add event handler
-			root.add(calculateButton, 1, 4);
-			
 			Label resultsLabel = new Label("Results:");
 			TextArea results = new TextArea();
 			results.setDisable(true);
@@ -52,6 +50,14 @@ public class Main extends Application {
 			results.setMaxWidth(300);
 			root.add(resultsLabel, 1, 5);
 			root.add(results, 1, 6);
+			
+			Button calculateButton = new Button("Calculate");
+			calculateButton.setOnAction(new EventHandler<ActionEvent>() {
+			    @Override public void handle(ActionEvent e) {
+			    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(), results);
+			    }
+			});
+			root.add(calculateButton, 1, 4);
 			
 			Scene scene = new Scene(root,400,400);
 		
@@ -61,6 +67,61 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Finds the largest palindrome between lower and upper bounds and
+	 * displays result or error message
+	 * 
+	 * @param lowerBound
+	 * @param upperBound
+	 * @param results
+	 */
+	private void getLargestPalindrome(String lowerBound, String upperBound, TextArea results)
+	{
+		
+		boolean validInput = areBoundsValidValues(lowerBound, upperBound, results);
+		
+		if (validInput)
+		{
+			//Search for largest palindrome
+			
+			
+		}
+	}
+	
+	/**
+	 * Determines if lower and upper bounds are positive integers and
+	 * displays error to user if either value is invalid.
+	 * 
+	 * @param lowerBound	String		User input for lower bound
+	 * @param upperBound	String		User input for upper bound
+	 * @param results		TextArea	gui component where results/errors are displayed
+	 * @return				boolean		True if upper and lower bounds are valid, else False
+	 */
+	private boolean areBoundsValidValues(String lowerBound, String upperBound, TextArea results)
+	{
+		if (!isNumber(lowerBound) || !isNumber(upperBound))
+		{
+			results.setText("Lower and upper bounds must be positive, whole numbers (Integers).");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Determines if a given string is a valid positive integer value
+	 * 
+	 * @param input	String	String of user input to check for integer value
+	 * @return	boolean	True if a valid integer, else False
+	 */
+	private boolean isNumber(String input)
+	{
+		if (input.matches("^[0-9]*"))
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	public static void main(String[] args) {

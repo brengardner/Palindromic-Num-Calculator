@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 /**
  * Controller for handling application logic
  * 
- * @author Brenna
+ * @author Brenna Gardner
  *
  */
 public class MainController {

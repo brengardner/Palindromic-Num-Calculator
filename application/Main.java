@@ -21,7 +21,7 @@ public class Main extends Application {
 			
 			mainStage.centerOnScreen();
 			mainStage.setTitle("Palindromic Number Calculator");
-			mainStage.setMinWidth(450);
+			mainStage.setMinHeight(500);
 			
 			GridPane root = new GridPane();
 			root.setHgap(10);
@@ -35,24 +35,24 @@ public class Main extends Application {
 		    
 			Label lowerBoundLabel = new Label("Lower bound: ");
 			Label upperBoundLabel = new Label("Upper bound: ");
-			root.add(lowerBoundLabel, 0, 2);
-			root.add(upperBoundLabel, 0, 3);
+			root.add(lowerBoundLabel, 1, 2);
+			root.add(upperBoundLabel, 1, 4);
 			
 			TextField lowerBoundInput = new TextField();
 			TextField upperBoundInput = new TextField();
-			root.add(lowerBoundInput, 1, 2);
-			root.add(upperBoundInput, 1, 3);
+			root.add(lowerBoundInput, 1, 3);
+			root.add(upperBoundInput, 1, 5);
 			
-			Text errors = new Text();
-			errors.setWrappingWidth(250);
-			root.add(errors, 1, 5);
+			Text errors = new Text("\n");
+			errors.setWrappingWidth(300);
+			root.add(errors, 1, 6);
 			
 			Label resultsLabel = new Label("Results:");
 			Text results = new Text();
 			results.setDisable(true);
-			results.setWrappingWidth(250);
-			root.add(resultsLabel, 1, 6);
-			root.add(results, 1, 7);
+			results.setWrappingWidth(300);
+			root.add(resultsLabel, 1, 8);
+			root.add(results, 1, 9);
 			
 			Button calculateButton = new Button("Calculate");
 			calculateButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -60,7 +60,7 @@ public class Main extends Application {
 			    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(),errors, results);
 			    }
 			});
-			root.add(calculateButton, 1, 4);
+			root.add(calculateButton, 1, 7);
 			
 			Scene scene = new Scene(root,400,400);
 		
@@ -87,11 +87,11 @@ public class Main extends Application {
 		boolean validInput = areBoundsValid(lowerBound, upperBound, errors);
 		
 		if (validInput)
-		{
+		{	
+			errors.setText("\n");
 			int lowerValue = Integer.parseInt(lowerBound);
 			int upperValue = Integer.parseInt(upperBound);
-			FindLargestPalindrome find = new FindLargestPalindrome(lowerValue, upperValue);
-			results.setText("Searching...");
+						FindLargestPalindrome find = new FindLargestPalindrome(lowerValue, upperValue);
 			int value = find.returnLargestPalindrome();
 			String message = "";
 			

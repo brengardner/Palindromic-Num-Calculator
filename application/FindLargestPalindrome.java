@@ -36,6 +36,14 @@ public class FindLargestPalindrome {
 	{
 		int largestPalindrome = -1;
 		
+		for (int i=this.lowerBound;i<=this.upperBound;i++)
+		{
+			if (isPalindrome(i) && i > largestPalindrome)
+			{
+				largestPalindrome = i;
+			}
+		}
+		
 		return largestPalindrome;
 	}
 	
@@ -66,6 +74,10 @@ public class FindLargestPalindrome {
 		System.out.println(testIsPalindrome.isPalindrome(19));
 		System.out.println(testIsPalindrome.isPalindrome(1212121));
 		System.out.println(testIsPalindrome.isPalindrome(123456));
+		
+		FindLargestPalindrome findTwelveToThirteen = new FindLargestPalindrome(12, 13);
+		int twelveToThirteen = findTwelveToThirteen.returnLargestPalindrome();
+		System.out.println(twelveToThirteen);
 		
 		FindLargestPalindrome findZeroToTen = new FindLargestPalindrome(0, 10);
 		int zeroToTen = findZeroToTen.returnLargestPalindrome();

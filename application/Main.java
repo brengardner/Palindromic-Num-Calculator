@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class Main extends Application {
@@ -40,6 +40,9 @@ public class Main extends Application {
 		    directions.setWrappingWidth(390);
 		    root.add(directions, 0, 1, 2, 1);
 		    
+		    VBox inputBox = new VBox();
+		    inputBox.setSpacing(10);
+		    
 			Label lowerBoundLabel = new Label("Lower bound: ");
 			TextField lowerBoundInput = new TextField();
 			HBox lowerBoundBox = new HBox();
@@ -52,14 +55,10 @@ public class Main extends Application {
 			upperBoundBox.setSpacing(10);
 			upperBoundBox.getChildren().addAll(upperBoundLabel, upperBoundInput);
 			
-			root.add(lowerBoundBox, 0, 2);
-			root.add(upperBoundBox, 0, 3);
-			
-			
 			Text errors = new Text("\n");
 			errors.setId("errors");
 			errors.setWrappingWidth(400);
-			root.add(errors, 0, 4);
+			root.add(errors, 0, 5);
 			
 			Label resultsLabel = new Label("Results:");
 			Text results = new Text();
@@ -74,7 +73,8 @@ public class Main extends Application {
 			    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(),errors, results);
 			    }
 			});
-			root.add(calculateButton, 0, 5);
+			inputBox.getChildren().addAll(lowerBoundBox, upperBoundBox, calculateButton);
+			root.add(inputBox, 0, 2);
 			
 			Scene scene = new Scene(root,400,400);
 		

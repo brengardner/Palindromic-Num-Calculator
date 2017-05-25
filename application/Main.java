@@ -35,7 +35,7 @@ public class Main extends Application {
 			heading.setId("heading");
 			root.add(heading, 0, 0, 2, 1);
 			
-			String directionsString = "Please select positive, integer lower and upper bounds in the labeled spaces below.\n\nPress 'Calculate' to search the number range for the largest palindrome.";
+			String directionsString ="Choose a range of two positive integers for the lower and upper bounds below (ie 1-100).\n\nPress 'Calculate' to search the number range for the largest palindrome.";
 		    Text directions = new Text(directionsString);
 		    directions.setWrappingWidth(390);
 		    root.add(directions, 0, 1, 2, 1);
@@ -43,6 +43,10 @@ public class Main extends Application {
 		    VBox inputBox = new VBox();
 		    inputBox.setSpacing(10);
 		    
+		    Text errors = new Text("\n");
+			errors.setId("errors");
+			errors.setWrappingWidth(400);
+			
 			Label lowerBoundLabel = new Label("Lower bound: ");
 			TextField lowerBoundInput = new TextField();
 			HBox lowerBoundBox = new HBox();
@@ -54,11 +58,6 @@ public class Main extends Application {
 			HBox upperBoundBox = new HBox();
 			upperBoundBox.setSpacing(10);
 			upperBoundBox.getChildren().addAll(upperBoundLabel, upperBoundInput);
-			
-			Text errors = new Text("\n");
-			errors.setId("errors");
-			errors.setWrappingWidth(400);
-			root.add(errors, 0, 5);
 			
 			Label resultsLabel = new Label("Results:");
 			Text results = new Text();
@@ -73,7 +72,7 @@ public class Main extends Application {
 			    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(),errors, results);
 			    }
 			});
-			inputBox.getChildren().addAll(lowerBoundBox, upperBoundBox, calculateButton);
+			inputBox.getChildren().addAll(errors, lowerBoundBox, upperBoundBox, calculateButton);
 			root.add(inputBox, 0, 2);
 			
 			Scene scene = new Scene(root,400,400);
@@ -145,13 +144,13 @@ public class Main extends Application {
 		
 		if (lowerBigInt.compareTo(maxIntValue) >= 1 || upperBigInt.compareTo(maxIntValue) >= 1)
 		{
-			errors.setText("Values must be in the positive, integer range [0 - 2147483647]");
+			errors.setText("Values must be in the positive integer range 0 - 2147483647");
 			return false;
 		}
 		
-		if (lowerBigInt.compareTo(upperBigInt) >= 1)
+		if (lowerBigInt.compareTo(upperBigInt) >= 0)
 		{
-			errors.setText("Please choose a lower bound that is less than or equal to the upper bound.");
+			errors.setText("Please choose a lower bound that is less than the upper bound.");
 			return false;
 		}
 		

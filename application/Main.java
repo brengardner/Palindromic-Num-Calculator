@@ -16,15 +16,44 @@ public class Main extends Application {
 	@Override
 	public void start(Stage mainStage) {
 		try {
-			//Main stage props
+			
 			mainStage.centerOnScreen();
 			mainStage.setTitle("Palindromic Number Calculator");
-			mainStage.setMinWidth(500);
+			mainStage.setMinWidth(450);
 			
-			//Add grid style layout
 			GridPane root = new GridPane();
-			Scene scene = new Scene(root,400,400);
+			root.setHgap(10);
+			root.setVgap(10);
+			root.setPadding(new Insets(10, 10, 10, 10));
 			
+			String directionsString = "Please select whole number lower and upper bounds in the labeled spaces below. Press 'Calculate' to search the number range for the largest palindrome.";
+		    Text directions = new Text(directionsString);
+		    directions.setWrappingWidth(300);
+		    root.add(directions, 1,1);
+		    
+			Label lowerBoundLabel = new Label("Lower bound: ");
+			Label upperBoundLabel = new Label("Upper bound: ");
+			root.add(lowerBoundLabel, 0, 2);
+			root.add(upperBoundLabel, 0, 3);
+			
+			TextField lowerBoundInput = new TextField();
+			TextField upperBoundInput = new TextField();
+			root.add(lowerBoundInput, 1, 2);
+			root.add(upperBoundInput, 1, 3);
+			
+			Button calculateButton = new Button("Calculate");
+			//Add event handler
+			root.add(calculateButton, 1, 4);
+			
+			Label resultsLabel = new Label("Results:");
+			TextArea results = new TextArea();
+			results.setMaxHeight(100);
+			results.setMaxWidth(300);
+			root.add(resultsLabel, 1, 5);
+			root.add(results, 1, 6);
+			
+			Scene scene = new Scene(root,400,400);
+		
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			mainStage.setScene(scene);
 			mainStage.show();

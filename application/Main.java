@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -134,6 +132,12 @@ public class Main extends Application {
 		if (lowerBigInt.compareTo(maxIntValue) >= 1 || upperBigInt.compareTo(maxIntValue) >= 1)
 		{
 			errors.setText("Values must be in the positive, integer range [0 - 2147483647]");
+			return false;
+		}
+		
+		if (lowerBigInt.compareTo(upperBigInt) >= 1)
+		{
+			errors.setText("Please choose a lower bound that is less than or equal to the upper bound.");
 			return false;
 		}
 		

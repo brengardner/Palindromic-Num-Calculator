@@ -23,7 +23,7 @@ public class Main extends Application {
 			
 			mainStage.centerOnScreen();
 			mainStage.setTitle("Palindromic Calculator");
-			//mainStage.setMinHeight(525);
+			mainStage.setMinHeight(500);
 			
 			GridPane root = new GridPane();
 			root.setId("root");
@@ -41,7 +41,7 @@ public class Main extends Application {
 		    root.add(directions, 0, 1, 2, 1);
 		    
 		    VBox inputBox = new VBox();
-		    inputBox.setSpacing(10);
+		    inputBox.setSpacing(5);
 		    
 		    Text errors = new Text("\n");
 			errors.setId("errors");

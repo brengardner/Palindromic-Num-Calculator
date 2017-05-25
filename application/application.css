@@ -1,7 +1,7 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
 #root {
-	
+	-fx-background-color: rgb(255,230,179);
 }
 
 #heading {
@@ -10,4 +10,9 @@
 
 #errors {
 	-fx-stroke: rgb(247, 89, 89);
+}
+
+#calculate {
+	-fx-background-color: rgb(255,204,153);
+	-fx-border-color: rgb(255,179,102);
 }

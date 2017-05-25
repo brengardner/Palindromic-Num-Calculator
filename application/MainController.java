@@ -28,17 +28,57 @@ public class MainController {
 	
 	public void appInit()
 	{
+		setMainStageProperties();
+		GridPane root = buildGridPane();
+		setAndShowScene(root);
+	}
+	
+	/**
+	 * Set properties for application main stage
+	 */
+	private void setMainStageProperties()
+	{
 		mainStage.centerOnScreen();
 		mainStage.setTitle("Palindromic Calculator");
 		mainStage.setMinHeight(400);
-		
-		GridPane root = buildGridPane();
-		Scene scene = new Scene(root,400,400);
+	}
 	
+	/**
+	 * 
+	 */
+	private void setAndShowScene(GridPane root)
+	{
+		Scene scene = new Scene(root,400,400);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		mainStage.setScene(scene);
 		mainStage.show();
 	}
+	
+	/**
+	 * Builds GridPane containing application elements
+	 * 
+	 * @return	root	GridPane	Application root pane for main stage
+	 */
+	private GridPane buildGridPane()
+	{
+		GridPane root = new GridPane();
+		root.setId("root");
+		root.setHgap(10);
+		root.setVgap(10);
+		root.setPadding(new Insets(10, 10, 10, 10));
+		
+		Text heading = buildHeading();
+		root.add(heading, 0, 0, 2, 1);
+	
+		Text directions = buildDirections();
+	    root.add(directions, 0, 1, 2, 1);
+	    
+	    VBox inputBox = buildInputVBox();
+		root.add(inputBox, 0, 2);
+		
+		return root;
+	}
+	
 	
 	/**
 	 * Builds and returns application main stage heading
@@ -60,7 +100,7 @@ public class MainController {
 	 */
 	private Text buildDirections()
 	{
-		String directionsString ="Choose a range of two positive integers for the lower and upper bounds below (ie 1-100).\n\nPress 'Calculate' to search the selected range for the largest palindromic number.";
+		String directionsString ="Choose a range of two positive integers for the lower and upper bounds below (ie 1 and 100).\n\nPress 'Calculate' to search the selected range for the largest palindromic number.";
 	    Text directions = new Text(directionsString);
 	    directions.setWrappingWidth(380);
 	    
@@ -91,9 +131,10 @@ public class MainController {
 		
 		Label resultsLabel = new Label("Results:");
 		Text results = new Text();
-		results.setWrappingWidth(400);
+		results.setWrappingWidth(380);
 		
 		Button calculateButton = new Button("Calculate");
+		calculateButton.setId("calculate");
 		calculateButton.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(), errors, results);
@@ -120,31 +161,6 @@ public class MainController {
 	}
 	
 	/**
-	 * Builds GridPane containing application elements
-	 * 
-	 * @return	root	GridPane	Application root pane for main stage
-	 */
-	private GridPane buildGridPane()
-	{
-		GridPane root = new GridPane();
-		root.setId("root");
-		root.setHgap(10);
-		root.setVgap(10);
-		root.setPadding(new Insets(10, 10, 10, 10));
-		
-		Text heading = buildHeading();
-		root.add(heading, 0, 0, 2, 1);
-	
-		Text directions = buildDirections();
-	    root.add(directions, 0, 1, 2, 1);
-	    
-	    VBox inputBox = buildInputVBox();
-		root.add(inputBox, 0, 2);
-		
-		return root;
-	}
-	
-	/**
 	 * Finds the largest palindrome between lower and upper bounds and
 	 * displays result or error message
 	 * 
@@ -163,7 +179,7 @@ public class MainController {
 			errors.setText("\n");
 			int lowerValue = Integer.parseInt(lowerBound);
 			int upperValue = Integer.parseInt(upperBound);
-						FindLargestPalindrome find = new FindLargestPalindrome(lowerValue, upperValue);
+			FindLargestPalindrome find = new FindLargestPalindrome(lowerValue, upperValue);
 			int value = find.returnLargestPalindrome();
 			String message = "";
 			

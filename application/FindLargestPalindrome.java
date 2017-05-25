@@ -40,12 +40,21 @@ public class FindLargestPalindrome {
 	}
 	
 	/**
+	 * Determines if number is a palindrome
 	 * 
 	 * @param number	int	Integer value to test for a palindromic number
 	 * @return boolean True if palindromic, else False
 	 */
 	public boolean isPalindrome(int number)
 	{
+		String numberString = Integer.toString(number);
+		String reverseString = new StringBuilder(numberString).reverse().toString();
+		
+		if (numberString.equals(reverseString))
+		{
+			return true;
+		}
+		
 		return false;
 	}
 	

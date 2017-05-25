@@ -15,6 +15,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Controller for handling application logic
+ * 
+ * @author Brenna
+ *
+ */
 public class MainController {
 
 	Stage mainStage;
@@ -26,6 +32,9 @@ public class MainController {
 		this.mainStage = mainStage;
 	}
 	
+	/**
+	 * Initializes application view
+	 */
 	public void appInit()
 	{
 		setMainStageProperties();
@@ -44,7 +53,9 @@ public class MainController {
 	}
 	
 	/**
+	 * Sets properties for and displays scene on main stage
 	 * 
+	 * @param root	GridPane	Root pane for displaying on main stage
 	 */
 	private void setAndShowScene(GridPane root)
 	{

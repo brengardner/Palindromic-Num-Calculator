@@ -2,7 +2,12 @@ package application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
-
+/**
+ * Runs main application using JavaFX
+ * 
+ * @author Brenna Gardner
+ *
+ */
 public class Main extends Application {
 	@Override
 	public void start(Stage mainStage) {

@@ -23,58 +23,9 @@ public class Main extends Application {
 			
 			mainStage.centerOnScreen();
 			mainStage.setTitle("Palindromic Calculator");
-			mainStage.setMinHeight(500);
+			mainStage.setMinHeight(400);
 			
-			GridPane root = new GridPane();
-			root.setId("root");
-			root.setHgap(10);
-			root.setVgap(10);
-			root.setPadding(new Insets(10, 10, 10, 10));
-			
-			Text heading = new Text("Palindromic Number Calculator");
-			heading.setId("heading");
-			root.add(heading, 0, 0, 2, 1);
-			
-			String directionsString ="Choose a range of two positive integers for the lower and upper bounds below (ie 1-100).\n\nPress 'Calculate' to search the number range for the largest palindrome.";
-		    Text directions = new Text(directionsString);
-		    directions.setWrappingWidth(390);
-		    root.add(directions, 0, 1, 2, 1);
-		    
-		    VBox inputBox = new VBox();
-		    inputBox.setSpacing(5);
-		    
-		    Text errors = new Text("\n");
-			errors.setId("errors");
-			errors.setWrappingWidth(400);
-			
-			Label lowerBoundLabel = new Label("Lower bound: ");
-			TextField lowerBoundInput = new TextField();
-			HBox lowerBoundBox = new HBox();
-			lowerBoundBox.setSpacing(10);
-			lowerBoundBox.getChildren().addAll(lowerBoundLabel, lowerBoundInput);
-			
-			Label upperBoundLabel = new Label("Upper bound: ");
-			TextField upperBoundInput = new TextField();
-			HBox upperBoundBox = new HBox();
-			upperBoundBox.setSpacing(10);
-			upperBoundBox.getChildren().addAll(upperBoundLabel, upperBoundInput);
-			
-			Label resultsLabel = new Label("Results:");
-			Text results = new Text();
-			results.setDisable(true);
-			results.setWrappingWidth(400);
-			root.add(resultsLabel, 0, 6);
-			root.add(results, 0, 7);
-			
-			Button calculateButton = new Button("Calculate");
-			calculateButton.setOnAction(new EventHandler<ActionEvent>() {
-			    @Override public void handle(ActionEvent e) {
-			    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(),errors, results);
-			    }
-			});
-			inputBox.getChildren().addAll(errors, lowerBoundBox, upperBoundBox, calculateButton);
-			root.add(inputBox, 0, 2);
-			
+			GridPane root = buildGridPane();
 			Scene scene = new Scene(root,400,400);
 		
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -83,6 +34,108 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * Builds and returns application main stage heading
+	 * 
+	 * @return	heading	Text	Name of application
+	 */
+	private Text buildHeading()
+	{
+		Text heading = new Text("Palindromic Number Calculator");
+		heading.setId("heading");
+		
+		return heading;
+	}
+	
+	/**
+	 * Builds and returns application directions
+	 * 
+	 * @return	directions	Text	Directions for application usage
+	 */
+	private Text buildDirections()
+	{
+		String directionsString ="Choose a range of two positive integers for the lower and upper bounds below (ie 1-100).\n\nPress 'Calculate' to search the selected range for the largest palindromic number.";
+	    Text directions = new Text(directionsString);
+	    directions.setWrappingWidth(380);
+	    
+	    return directions;
+	}
+	
+	/**
+	 * Builds and returns VBox containing input form
+	 * 
+	 * @return	inputBox	VBox	Input form
+	 */
+	private VBox buildInputVBox()
+	{
+		VBox inputBox = new VBox();
+	    inputBox.setSpacing(10);
+	    
+	    Text errors = new Text("\n");
+		errors.setId("errors");
+		errors.setWrappingWidth(400);
+		
+		Label lowerBoundLabel = new Label("Lower bound: ");
+		TextField lowerBoundInput = new TextField();	
+		HBox lowerBoundBox = buildHBox(lowerBoundLabel, lowerBoundInput);
+		
+		Label upperBoundLabel = new Label("Upper bound: ");
+		TextField upperBoundInput = new TextField();
+		HBox upperBoundBox = buildHBox(upperBoundLabel, upperBoundInput);
+		
+		Label resultsLabel = new Label("Results:");
+		Text results = new Text();
+		results.setWrappingWidth(400);
+		
+		Button calculateButton = new Button("Calculate");
+		calculateButton.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(),errors, results);
+		    }
+		});
+		
+		inputBox.getChildren().addAll(errors, lowerBoundBox, upperBoundBox, calculateButton, resultsLabel, results);
+		
+		return inputBox;
+	}
+	
+	/**
+	 * 
+	 * 
+	 */
+	private HBox buildHBox(Label label, TextField input)
+	{
+		HBox boundBox = new HBox();
+		boundBox.setSpacing(10);
+		boundBox.getChildren().addAll(label, input);
+		
+		return boundBox;
+	}
+	
+	/**
+	 * Builds GridPane containing application elements
+	 * 
+	 * @return	root	GridPane	Application root pane for main stage
+	 */
+	private GridPane buildGridPane()
+	{
+		GridPane root = new GridPane();
+		root.setId("root");
+		root.setHgap(10);
+		root.setVgap(10);
+		root.setPadding(new Insets(10, 10, 10, 10));
+		
+		Text heading = buildHeading();
+		root.add(heading, 0, 0, 2, 1);
+	
+		Text directions = buildDirections();
+	    root.add(directions, 0, 1, 2, 1);
+	    
+	    VBox inputBox = buildInputVBox();
+		root.add(inputBox, 0, 2);
+		
+		return root;
 	}
 	
 	/**
@@ -144,7 +197,7 @@ public class Main extends Application {
 		
 		if (lowerBigInt.compareTo(maxIntValue) >= 1 || upperBigInt.compareTo(maxIntValue) >= 1)
 		{
-			errors.setText("Values must be in the positive integer range 0 - 2147483647");
+			errors.setText("Values must be in the positive integer range [0 - 2147483647]");
 			return false;
 		}
 		

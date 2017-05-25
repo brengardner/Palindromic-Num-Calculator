@@ -100,7 +100,9 @@ public class MainController {
 	 */
 	private Text buildDirections()
 	{
-		String directionsString ="Choose a range of two positive integers for the lower and upper bounds below (ie 1 and 100).\n\nPress 'Calculate' to search the selected range for the largest palindromic number.";
+		String directionsString ="Choose a range of two positive integers for the "
+				+ "lower and upper bounds below (ie 1 and 100).\n\nPress 'Calculate'"
+				+ " to search the selected range for the largest palindromic number.";
 	    Text directions = new Text(directionsString);
 	    directions.setWrappingWidth(380);
 	    
@@ -119,7 +121,7 @@ public class MainController {
 	    
 	    Text errors = new Text("\n");
 		errors.setId("errors");
-		errors.setWrappingWidth(400);
+		errors.setWrappingWidth(380);
 		
 		Label lowerBoundLabel = new Label("Lower bound: ");
 		TextField lowerBoundInput = new TextField();	

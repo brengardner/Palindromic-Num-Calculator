@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class Main extends Application {
@@ -20,39 +22,51 @@ public class Main extends Application {
 		try {
 			
 			mainStage.centerOnScreen();
-			mainStage.setTitle("Palindromic Number Calculator");
-			mainStage.setMinHeight(500);
+			mainStage.setTitle("Palindromic Calculator");
+			//mainStage.setMinHeight(525);
 			
 			GridPane root = new GridPane();
+			root.setId("root");
 			root.setHgap(10);
 			root.setVgap(10);
 			root.setPadding(new Insets(10, 10, 10, 10));
 			
-			String directionsString = "Please select positive, integer lower and upper bounds in the labeled spaces below. Press 'Calculate' to search the number range for the largest palindrome.";
+			Text heading = new Text("Palindromic Number Calculator");
+			heading.setId("heading");
+			root.add(heading, 0, 0, 2, 1);
+			
+			String directionsString = "Please select positive, integer lower and upper bounds in the labeled spaces below.\n\nPress 'Calculate' to search the number range for the largest palindrome.";
 		    Text directions = new Text(directionsString);
-		    directions.setWrappingWidth(300);
-		    root.add(directions, 1,1);
+		    directions.setWrappingWidth(390);
+		    root.add(directions, 0, 1, 2, 1);
 		    
 			Label lowerBoundLabel = new Label("Lower bound: ");
-			Label upperBoundLabel = new Label("Upper bound: ");
-			root.add(lowerBoundLabel, 1, 2);
-			root.add(upperBoundLabel, 1, 4);
-			
 			TextField lowerBoundInput = new TextField();
+			HBox lowerBoundBox = new HBox();
+			lowerBoundBox.setSpacing(10);
+			lowerBoundBox.getChildren().addAll(lowerBoundLabel, lowerBoundInput);
+			
+			Label upperBoundLabel = new Label("Upper bound: ");
 			TextField upperBoundInput = new TextField();
-			root.add(lowerBoundInput, 1, 3);
-			root.add(upperBoundInput, 1, 5);
+			HBox upperBoundBox = new HBox();
+			upperBoundBox.setSpacing(10);
+			upperBoundBox.getChildren().addAll(upperBoundLabel, upperBoundInput);
+			
+			root.add(lowerBoundBox, 0, 2);
+			root.add(upperBoundBox, 0, 3);
+			
 			
 			Text errors = new Text("\n");
-			errors.setWrappingWidth(300);
-			root.add(errors, 1, 6);
+			errors.setId("errors");
+			errors.setWrappingWidth(400);
+			root.add(errors, 0, 4);
 			
 			Label resultsLabel = new Label("Results:");
 			Text results = new Text();
 			results.setDisable(true);
-			results.setWrappingWidth(300);
-			root.add(resultsLabel, 1, 8);
-			root.add(results, 1, 9);
+			results.setWrappingWidth(400);
+			root.add(resultsLabel, 0, 6);
+			root.add(results, 0, 7);
 			
 			Button calculateButton = new Button("Calculate");
 			calculateButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -60,7 +74,7 @@ public class Main extends Application {
 			    	getLargestPalindrome(lowerBoundInput.getText(), upperBoundInput.getText(),errors, results);
 			    }
 			});
-			root.add(calculateButton, 1, 7);
+			root.add(calculateButton, 0, 5);
 			
 			Scene scene = new Scene(root,400,400);
 		
@@ -120,7 +134,7 @@ public class Main extends Application {
 		
 		if (!isNumber(lowerBound) || !isNumber(upperBound))
 		{
-			errors.setText("Lower and upper bounds must be positive integer values.");
+			errors.setText("Lower and upper bounds must be positive integer values.\n");
 			return false;
 		}
 		

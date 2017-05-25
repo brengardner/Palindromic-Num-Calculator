@@ -1,1 +1,13 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+#root {
+	
+}
+
+#heading {
+	-fx-font: 18 arial;
+}
+
+#errors {
+	-fx-stroke: rgb(247, 89, 89);
+}
